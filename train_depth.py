@@ -180,10 +180,10 @@ def main():
     train_dataloader = torch.utils.data.DataLoader(
         train_dataset,
         batch_size=opt.bsize,
-        shuffle=(train_sampler is None),
+        shuffle=True,
         num_workers=opt.num_workers,
         pin_memory=True,
-        sampler=train_sampler)
+        )
 
     # stable diffusion
     model = load_model_from_config(config, f"{opt.ckpt}").to(device)
@@ -193,14 +193,8 @@ def main():
         device)
 
     # to gpus
-    model_ad = torch.nn.parallel.DistributedDataParallel(
-        model_ad,
-        device_ids=[opt.local_rank],
-        output_device=opt.local_rank)
-    model = torch.nn.parallel.DistributedDataParallel(
-        model,
-        device_ids=[opt.local_rank],
-        output_device=opt.local_rank)
+    model_ad = model_ad.to(device)
+    model = model_ad.to(device)
 
     # optimizer
     params = list(model_ad.parameters())
