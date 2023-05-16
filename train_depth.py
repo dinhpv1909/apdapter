@@ -169,7 +169,7 @@ def main():
     config = OmegaConf.load(f"{opt.config}")
 
     # distributed setting
-    init_dist(opt.launcher)
+    # init_dist(opt.launcher)
     torch.backends.cudnn.benchmark = True
     device = 'cuda'
     torch.cuda.set_device(opt.local_rank)
