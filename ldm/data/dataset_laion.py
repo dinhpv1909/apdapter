@@ -136,7 +136,7 @@ if __name__ == '__main__':
     import cv2
     save_root = 'tmp/coadapter'
     os.makedirs(save_root, exist_ok=True)
-
+    print('Running')
     for idx, batch in enumerate(dataloader):
         print(batch.keys())
         print(batch['jpg'].shape, torch.min(batch['jpg']), torch.max(batch['jpg']))
