@@ -139,7 +139,7 @@ data:
         - "/kaggle/input/check-tar/1_1.tar.xz"
         - "/kaggle/input/check-tar/2.tar.xz"
         - "/kaggle/input/check-tar/2_1.tar.xz"
-        -"/kaggle/input/check-tar/2_2.tar.xz"  #{00000-94333}.tar" # need to change
+        - "/kaggle/input/check-tar/2_2.tar.xz"  #{00000-94333}.tar" # need to change
       shuffle: 10000
       image_key: jpg
       image_transforms:
