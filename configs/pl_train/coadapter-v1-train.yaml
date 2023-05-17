@@ -130,7 +130,7 @@ data:
   params:
     tar_base: null # need to change
     batch_size: 1
-    num_workers: 8
+    num_workers: 2
     multinode: True
     train:
       shards: 
