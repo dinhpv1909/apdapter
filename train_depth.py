@@ -176,7 +176,7 @@ def main():
 
     # dataset
     train_dataset = DepthDataset('/kaggle/input/data-tiktok/anotation.csv')
-    train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset)
+    # train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset)
     train_dataloader = torch.utils.data.DataLoader(
         train_dataset,
         batch_size=opt.bsize,
