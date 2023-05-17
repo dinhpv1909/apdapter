@@ -92,12 +92,12 @@ class WebDataModuleFromConfig(pl.LightningDataModule):
                 jpg=image_transforms, handler=wds.warn_and_continue))
         for process in process_list:
             dset = dset.map(process)
-            print("data_set", dset[0])
+            
             # print("data_set", dset[0][0])
         dset = (dset.batched(self.batch_size, partial=False, collation_fn=dict_collation_fn))
 
         loader = wds.WebLoader(dset, batch_size=None, shuffle=False, num_workers=self.num_workers)
-
+        print("data_set", loader.shape)
         return loader
 
     def filter_size(self, x):
