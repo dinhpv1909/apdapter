@@ -6,7 +6,7 @@ import pytorch_lightning as pl
 import torch
 import webdataset as wds
 from torchvision.transforms import transforms
-
+from glob import glob
 from ldm.util import instantiate_from_config
 
 
@@ -78,9 +78,9 @@ class WebDataModuleFromConfig(pl.LightningDataModule):
         shardshuffle = shuffle > 0
 
         nodesplitter = wds.shardlists.split_by_node if self.multinode else wds.shardlists.single_node_only
-
-        tars = os.path.join(self.tar_base, dataset_config.shards)
-        print(tars)
+        tars = glob("/kaggle/input/data-tik/control_pose_per_vid/*/*")
+        # tars = os.path.join(self.tar_base, dataset_config.shards)
+        print("len",len(tars))
         dset = wds.WebDataset(
             tars, nodesplitter=nodesplitter, shardshuffle=shardshuffle,
             handler=wds.warn_and_continue).repeat().shuffle(shuffle)
