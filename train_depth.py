@@ -238,9 +238,9 @@ def main():
         for _, data in enumerate(train_dataloader):
             current_iter += 1
             with torch.no_grad():
-                c = model.module.get_learned_conditioning(data['sentence'])
-                z = model.module.encode_first_stage((data['im'] * 2 - 1.).to(device))
-                z = model.module.get_first_stage_encoding(z)
+                c = model.modules.get_learned_conditioning(data['sentence'])
+                z = model.modules.encode_first_stage((data['im'] * 2 - 1.).to(device))
+                z = model.modules.get_first_stage_encoding(z)
 
             optimizer.zero_grad()
             model.zero_grad()

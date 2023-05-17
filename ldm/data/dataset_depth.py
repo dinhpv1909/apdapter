@@ -20,7 +20,7 @@ class DepthDataset():
         file = self.files[idx]
 
         im = cv2.imread(f"/kaggle/input/datatiktok/control_pose_per_vid/{file['img_path']}")
-        print(im.shape)
+        # print(im.shape)
         im = img2tensor(im, bgr2rgb=True, float32=True) / 255.
 
         depth = cv2.imread(f"/kaggle/input/datatiktok/control_pose_per_vid/{file['depth_img_path']}")  # [:,:,0]
