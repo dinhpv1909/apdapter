@@ -73,7 +73,7 @@ model:
 
 logger:
   print_freq: 100
-  save_checkpoint_freq: !!float 1e4
+  save_checkpoint_freq: 10000
   use_tb_logger: true
   wandb:
     project: ~
@@ -82,5 +82,5 @@ dist_params:
   backend: nccl
   port: 29500
 training:
-  lr: !!float 1e-5
+  lr: 0.00005
   save_freq: 1e4
