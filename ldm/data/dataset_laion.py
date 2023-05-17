@@ -97,7 +97,7 @@ class WebDataModuleFromConfig(pl.LightningDataModule):
         dset = (dset.batched(self.batch_size, partial=False, collation_fn=dict_collation_fn))
 
         loader = wds.WebLoader(dset, batch_size=None, shuffle=False, num_workers=self.num_workers)
-        print("data_set", loader.shape)
+        print("data_set", len(loader))
         return loader
 
     def filter_size(self, x):
