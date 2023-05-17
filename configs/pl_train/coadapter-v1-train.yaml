@@ -128,12 +128,17 @@ model:
 data:
   target: ldm.data.dataset_laion.WebDataModuleFromConfig
   params:
-    tar_base: /kaggle/input/data-tik/control_pose_per_vid/*/* # need to change
+    tar_base: /kaggle/input/data-tik/control_pose_per_vid # need to change
     batch_size: 2
     num_workers: 8
     multinode: True
     train:
-      shards: /kaggle/working/ # need to change
+      shards: 
+        - "pipe:aws s3 cp s3://stability-aws/laion-a-native/part-0/{00000..18699}.tar -"
+        - "pipe:aws s3 cp s3://stability-aws/laion-a-native/part-1/{00000..18699}.tar -"
+        - "pipe:aws s3 cp s3://stability-aws/laion-a-native/part-2/{00000..18699}.tar -"
+        - "pipe:aws s3 cp s3://stability-aws/laion-a-native/part-3/{00000..18699}.tar -"
+        - "pipe:aws s3 cp s3://stability-aws/laion-a-native/part-4/{00000..18699}.tar -"  #{00000-94333}.tar" # need to change
       shuffle: 10000
       image_key: jpg
       image_transforms:
