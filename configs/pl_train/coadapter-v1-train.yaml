@@ -134,11 +134,12 @@ data:
     multinode: True
     train:
       shards: 
-        - "pipe:aws s3 cp s3://stability-aws/laion-a-native/part-0/{00000..18699}.tar -"
-        - "pipe:aws s3 cp s3://stability-aws/laion-a-native/part-1/{00000..18699}.tar -"
-        - "pipe:aws s3 cp s3://stability-aws/laion-a-native/part-2/{00000..18699}.tar -"
-        - "pipe:aws s3 cp s3://stability-aws/laion-a-native/part-3/{00000..18699}.tar -"
-        - "pipe:aws s3 cp s3://stability-aws/laion-a-native/part-4/{00000..18699}.tar -"  #{00000-94333}.tar" # need to change
+        - "/kaggle/input/check-tar/0.tar.xz"
+        - "/kaggle/input/check-tar/1.tar.xz"
+        - "/kaggle/input/check-tar/1_1.tar.xz"
+        - "/kaggle/input/check-tar/2.tar.xz"
+        - "/kaggle/input/check-tar/2_1.tar.xz"
+        -"/kaggle/input/check-tar/2_2.tar.xz"  #{00000-94333}.tar" # need to change
       shuffle: 10000
       image_key: jpg
       image_transforms:
