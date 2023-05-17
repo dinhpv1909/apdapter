@@ -3,45 +3,45 @@ model:
   target: adapters.coadapters.CoAdapter
   params:
     adapter_configs:
-      - target: ldm.modules.encoders.adapter.StyleAdapter
-        cond_name: style
-        pretrained: models/t2iadapter_style_sd14v1.pth
-        params:
-          width: 1024
-          context_dim: 768
-          num_head: 8
-          n_layes: 3
-          num_token: 8
+      # - target: ldm.modules.encoders.adapter.StyleAdapter
+      #   cond_name: style
+      #   pretrained: models/t2iadapter_style_sd14v1.pth
+      #   params:
+      #     width: 1024
+      #     context_dim: 768
+      #     num_head: 8
+      #     n_layes: 3
+      #     num_token: 8
 
-      - target: ldm.modules.encoders.adapter.Adapter
-        cond_name: canny
-        pretrained: models/t2iadapter_canny_sd14v1.pth
-        params:
-          cin: 64
-          channels: [ 320, 640, 1280, 1280 ]
-          nums_rb: 2
-          ksize: 1
-          sk: True
-          use_conv: False
+      # - target: ldm.modules.encoders.adapter.Adapter
+      #   cond_name: canny
+      #   pretrained: models/t2iadapter_canny_sd14v1.pth
+      #   params:
+      #     cin: 64
+      #     channels: [ 320, 640, 1280, 1280 ]
+      #     nums_rb: 2
+      #     ksize: 1
+      #     sk: True
+      #     use_conv: False
 
-      - target: ldm.modules.encoders.adapter.Adapter
-        cond_name: sketch
-        pretrained: models/t2iadapter_sketch_sd14v1.pth
-        params:
-          cin: 64
-          channels: [ 320, 640, 1280, 1280 ]
-          nums_rb: 2
-          ksize: 1
-          sk: True
-          use_conv: False
+      # - target: ldm.modules.encoders.adapter.Adapter
+      #   cond_name: sketch
+      #   pretrained: models/t2iadapter_sketch_sd14v1.pth
+      #   params:
+      #     cin: 64
+      #     channels: [ 320, 640, 1280, 1280 ]
+      #     nums_rb: 2
+      #     ksize: 1
+      #     sk: True
+      #     use_conv: False
 
-      - target: ldm.modules.encoders.adapter.Adapter_light
-        cond_name: color
-        pretrained: models/t2iadapter_color_sd14v1.pth
-        params:
-          cin: 192
-          channels: [ 320, 640, 1280, 1280 ]
-          nums_rb: 4
+      # - target: ldm.modules.encoders.adapter.Adapter_light
+      #   cond_name: color
+      #   pretrained: models/t2iadapter_color_sd14v1.pth
+      #   params:
+      #     cin: 192
+      #     channels: [ 320, 640, 1280, 1280 ]
+      #     nums_rb: 4
 
       - target: ldm.modules.encoders.adapter.Adapter
         cond_name: depth
