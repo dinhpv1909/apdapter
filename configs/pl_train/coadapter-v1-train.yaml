@@ -140,7 +140,7 @@ data:
         # - "2.tar.xz"
         # - "2_1.tar.xz"
         # - "2_2.tar.xz"  #{00000-94333}.tar" # need to change
-        /kaggle/input/tiktik/23.tar.xz
+        "/kaggle/input/tiktik/23.tar.xz"
       shuffle: 10000
       image_key: jpg
       image_transforms:
