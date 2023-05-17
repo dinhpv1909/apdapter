@@ -198,7 +198,7 @@ def main():
 
     # optimizer
     params = list(model_ad.parameters())
-    optimizer = torch.optim.AdamW(params, lr=config['training']['lr'])
+    optimizer = torch.optim.AdamW(params, lr=0.00001)
 
     experiments_root = osp.join('experiments', opt.name)
 
