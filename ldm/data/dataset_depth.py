@@ -12,6 +12,7 @@ class DepthDataset():
         data = pd.read_csv(meta_file)
         for line in range(len(data)):
             img_path = f'{data["ID"][line]}/{data["Image"][line]}'
+            print(img_path)
             depth_img_path = img_path
             txt_path = img_path.rsplit('.', 1)[0] + '.txt'
             self.files.append({'img_path': img_path, 'depth_img_path': depth_img_path, 'txt_path': txt_path})
