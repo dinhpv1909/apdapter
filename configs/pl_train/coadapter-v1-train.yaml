@@ -133,14 +133,14 @@ data:
     num_workers: 2
     multinode: True
     train:
-      shards: 
+      shards: /kaggle/input/tiktik/23.tar.xz
         # - "0.tar.xz"
         # - "1.tar.xz"
         # - "1_1.tar.xz"
         # - "2.tar.xz"
         # - "2_1.tar.xz"
         # - "2_2.tar.xz"  #{00000-94333}.tar" # need to change
-        "/kaggle/input/tiktik/23.tar.xz"
+        
       shuffle: 10000
       image_key: jpg
       image_transforms:
