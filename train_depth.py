@@ -233,7 +233,7 @@ def main():
     # training
     logger.info(f'Start training from epoch: {start_epoch}, iter: {current_iter}')
     for epoch in range(start_epoch, opt.epochs):
-        train_dataloader.sampler.set_epoch(epoch)
+        # train_dataloader.sampler.set_epoch(epoch)
         # train
         for _, data in enumerate(train_dataloader):
             current_iter += 1
