@@ -78,8 +78,8 @@ class WebDataModuleFromConfig(pl.LightningDataModule):
         shardshuffle = shuffle > 0
 
         nodesplitter = wds.shardlists.split_by_node if self.multinode else wds.shardlists.single_node_only
-        # tars = glob("/kaggle/input/data-tik/control_pose_per_vid/*/*")
-        tars = os.path.join(self.tar_base, dataset_config.shards)
+        tars = glob("/kaggle/input/data-tik/control_pose_per_vid/*/*")
+        # tars = os.path.join(self.tar_base, dataset_config.shards)
         print("len",len(tars))
         dset = wds.WebDataset(
             tars, nodesplitter=nodesplitter, shardshuffle=shardshuffle,
@@ -92,6 +92,7 @@ class WebDataModuleFromConfig(pl.LightningDataModule):
                 jpg=image_transforms, handler=wds.warn_and_continue))
         for process in process_list:
             dset = dset.map(process)
+        print("data_set", dset)
         dset = (dset.batched(self.batch_size, partial=False, collation_fn=dict_collation_fn))
 
         loader = wds.WebLoader(dset, batch_size=None, shuffle=False, num_workers=self.num_workers)
