@@ -175,7 +175,7 @@ def main():
     torch.cuda.set_device(opt.local_rank)
 
     # dataset
-    train_dataset = DepthDataset('datasets/laion_depth_meta_v1.txt')
+    train_dataset = DepthDataset('/kaggle/input/data-tiktok/anotation.csv')
     train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset)
     train_dataloader = torch.utils.data.DataLoader(
         train_dataset,
