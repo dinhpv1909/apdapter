@@ -80,7 +80,7 @@ class WebDataModuleFromConfig(pl.LightningDataModule):
         nodesplitter = wds.shardlists.split_by_node if self.multinode else wds.shardlists.single_node_only
 
         tars = os.path.join(self.tar_base, dataset_config.shards)
-
+        print(tars)
         dset = wds.WebDataset(
             tars, nodesplitter=nodesplitter, shardshuffle=shardshuffle,
             handler=wds.warn_and_continue).repeat().shuffle(shuffle)
