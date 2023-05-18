@@ -7,7 +7,7 @@ from basicsr.utils import (get_env_info, get_root_logger, get_time_str,
                            scandir)
 from basicsr.utils.options import copy_opt_file, dict2str
 from omegaconf import OmegaConf
-
+import torchvision.transforms as transforms
 from ldm.data.dataset_depth import DepthDataset
 from basicsr.utils.dist_util import get_dist_info, init_dist, master_only
 from ldm.modules.encoders.adapter import Adapter
@@ -173,7 +173,7 @@ def main():
     torch.backends.cudnn.benchmark = True
     device = 'cuda'
     # torch.cuda.set_device(opt.local_rank)
-
+    transform=transforms.Compose([Resize(256),ToTensor()]))
     # dataset
     train_dataset = DepthDataset('/kaggle/input/data-tiktok/anotation.csv')
     # train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset)
@@ -181,6 +181,7 @@ def main():
         train_dataset,
         batch_size=opt.bsize,
         shuffle=True,
+        transform=transform,
         num_workers=opt.num_workers,
         pin_memory=True,
         )
