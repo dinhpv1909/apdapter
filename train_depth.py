@@ -252,7 +252,7 @@ def main():
 
             optimizer.zero_grad()
             model.zero_grad()
-            features_adapter = model_ad(data['depth'].cuda("cuda:0",non_blocking=True))
+            features_adapter = model_ad(data['depth'].to(device))
             l_pixel, loss_dict = model(z, c=c, features_adapter=features_adapter)
             l_pixel.backward()
             optimizer.step()

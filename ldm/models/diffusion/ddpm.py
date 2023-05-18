@@ -206,7 +206,7 @@ class DDPM(pl.LightningModule):
 
     @torch.no_grad()
     def init_from_ckpt(self, path, ignore_keys=list(), only_model=False):
-        sd = torch.load(path, map_location="cuda:0")
+        sd = torch.load(path, map_location="cpu")
         if "state_dict" in list(sd.keys()):
             sd = sd["state_dict"]
         keys = list(sd.keys())
@@ -883,7 +883,7 @@ class LatentDiffusion(DDPM):
 
         loss_simple = self.get_loss(model_output, target, mean=False).mean([1, 2, 3])
         loss_dict.update({f'{prefix}/loss_simple': loss_simple.mean()})
-
+        self.logvar = self.logvar.to(device)
         logvar_t = self.logvar[t].to(self.device)
         # logvar_t = self.logvar[t].to("cuda:0")
         # logvar_t = self.logvar[t].to("cpu")
