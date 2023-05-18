@@ -43,9 +43,20 @@ model:
       #     channels: [ 320, 640, 1280, 1280 ]
       #     nums_rb: 4
 
+      # - target: ldm.modules.encoders.adapter.Adapter
+      #   cond_name: depth
+      #   pretrained: models/t2iadapter_depth_sd14v1.pth
+      #   params:
+      #     cin: 192
+      #     channels: [ 320, 640, 1280, 1280 ]
+      #     nums_rb: 2
+      #     ksize: 1
+      #     sk: True
+      #     use_conv: False
+
       - target: ldm.modules.encoders.adapter.Adapter
         cond_name: depth
-        pretrained: models/t2iadapter_depth_sd14v1.pth
+        pretrained: models/t2iadapter_openpose_sd14v1.pth
         params:
           cin: 192
           channels: [ 320, 640, 1280, 1280 ]

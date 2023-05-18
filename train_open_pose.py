@@ -7,7 +7,7 @@ from basicsr.utils import (get_env_info, get_root_logger, get_time_str,
                            scandir)
 from basicsr.utils.options import copy_opt_file, dict2str
 from omegaconf import OmegaConf
-from ldm.data.dataset_depth import DepthDataset
+from ldm.data.dataset_open_pose import Open_Pose_Dataset
 from basicsr.utils.dist_util import get_dist_info, init_dist, master_only
 from ldm.modules.encoders.adapter import Adapter
 from ldm.util import load_model_from_config
@@ -174,7 +174,7 @@ def main():
     torch.cuda.set_device(opt.local_rank)
   
     # dataset
-    train_dataset = DepthDataset('/kaggle/input/data-tiktok/anotation.csv')
+    train_dataset = Open_Pose_Dataset('/kaggle/input/data-tiktok/anotation.csv')
     # train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset)
     train_dataloader = torch.utils.data.DataLoader(
         train_dataset,
