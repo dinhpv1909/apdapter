@@ -252,8 +252,8 @@ def main():
 
             optimizer.zero_grad()
             model.zero_grad()
-            features_adapter = model_ad(data['depth'].to("cpu"))
-            l_pixel, loss_dict = model(z, c=c, features_adapter=features_adapter)
+            features_adapter = model_ad(data['depth'].to(device))
+            l_pixel, loss_dict = model(z, c=c, features_adapter=features_adapter).to("cpu")
             l_pixel.backward()
             optimizer.step()
 
