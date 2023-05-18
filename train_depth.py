@@ -171,8 +171,8 @@ def main():
     # distributed setting
     # init_dist(opt.launcher)
     torch.backends.cudnn.benchmark = True
-    device = 'cuda:0'
-    torch.cuda.set_device(opt.local_rank)
+    device = 'cuda'
+    # torch.cuda.set_device(opt.local_rank)
 
     # dataset
     train_dataset = DepthDataset('/kaggle/input/data-tiktok/anotation.csv')
