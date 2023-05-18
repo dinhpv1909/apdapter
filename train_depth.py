@@ -173,7 +173,7 @@ def main():
     torch.backends.cudnn.benchmark = True
     device = 'cuda'
     # torch.cuda.set_device(opt.local_rank)
-    transform=transforms.Compose([Resize(256),ToTensor()]))
+    transform=transforms.Compose([transforms.Resize(512),transforms.ToTensor()])
     # dataset
     train_dataset = DepthDataset('/kaggle/input/data-tiktok/anotation.csv')
     # train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset)
