@@ -91,7 +91,7 @@ def parsr_args():
     parser.add_argument(
         "--name",
         type=str,
-        default="train_depth",
+        default="train_open_pose",
         help="experiment name",
     )
     parser.add_argument(
@@ -187,7 +187,7 @@ def main():
     # stable diffusion
     model = load_model_from_config(config, f"{opt.ckpt}").to(device)
 
-    # depth encoder
+    # open_pose encoder
     model_ad = Adapter(cin=3 * 64, channels=[320, 640, 1280, 1280][:4], nums_rb=2, ksize=1, sk=True, use_conv=False).to(
         device)
 
@@ -245,14 +245,13 @@ def main():
         for _, data in enumerate(train_dataloader):
             current_iter += 1
             with torch.no_grad():
-                print(data['sentence'])
                 c = model.get_learned_conditioning(data['sentence'])
                 z = model.encode_first_stage((data['im'] * 2 - 1.).to(device))
                 z = model.get_first_stage_encoding(z)
 
             optimizer.zero_grad()
             model.zero_grad()
-            features_adapter = model_ad(data['depth'].to(device))
+            features_adapter = model_ad(data['open_pose'].to(device))
             l_pixel, loss_dict = model(z, c=c, features_adapter=features_adapter)
             l_pixel.backward()
             optimizer.step()
