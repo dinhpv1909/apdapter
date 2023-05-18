@@ -193,8 +193,15 @@ def main():
         device)
 
     # to gpus
-    model_ad = model_ad.to(device)
-    model = model.to(device)
+    # to gpus
+    model_ad = torch.nn.parallel.DistributedDataParallel(
+        model_ad,
+        device_ids=[opt.local_rank],
+        output_device=opt.local_rank)
+    model = torch.nn.parallel.DistributedDataParallel(
+        model,
+        device_ids=[opt.local_rank],
+        output_device=opt.local_rank)
 
     # optimizer
     params = list(model_ad.parameters())
