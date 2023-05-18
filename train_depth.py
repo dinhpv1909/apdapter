@@ -194,7 +194,7 @@ def main():
 
     # to gpus
     model_ad = model_ad.to(device)
-    model = model_ad.to(device)
+    model = model.to(device)
 
     # optimizer
     params = list(model_ad.parameters())
