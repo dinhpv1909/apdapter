@@ -247,7 +247,7 @@ def main():
             with torch.no_grad():
                 print(data['sentence'])
                 c = model.get_learned_conditioning(data['sentence'])
-                z = model.encode_first_stage((data['im'] * 2 - 1.).cuda("cuda:0",non_blocking=True))
+                z = model.encode_first_stage((data['im'] * 2 - 1.).to(device))
                 z = model.get_first_stage_encoding(z)
 
             optimizer.zero_grad()
@@ -262,7 +262,7 @@ def main():
 
             # save checkpoint
             rank, _ = get_dist_info()
-            if (rank == 0) and ((current_iter + 1) % config['training']['save_freq'] == 0):
+            if (rank == 0) and ((current_iter + 1) % 10000 == 0):
                 save_filename = f'model_ad_{current_iter + 1}.pth'
                 save_path = os.path.join(experiments_root, 'models', save_filename)
                 save_dict = {}
