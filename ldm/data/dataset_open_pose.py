@@ -21,8 +21,8 @@ class Open_Pose_Dataset():
         file = self.files[idx]
 
         im = cv2.imread(f"{file['img_path']}")
-        w = im.shape[0]
-        h = im.shape[1]
+        h = im.shape[0]
+        w = im.shape[1]
         
         if w % 8 != 0:
             w = w + (8- (w % 8))
