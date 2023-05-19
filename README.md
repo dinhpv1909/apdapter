@@ -75,6 +75,20 @@ Put the downloaded models in the `T2I-Adapter/models` folder.
 pip install -r requirements.txt
 ```
 - If you want to use the full function of keypose-guided generation, you need to install MMPose. For details please refer to <https://github.com/open-mmlab/mmpose>.
+# How to Train 
+
+It train openPose
+```
+%cd personalized_generation/examples/apdapter-T2I/
+!python train_open_pose.py
+--file_csv = FILE_CSV_PATH{'ID': ID, 'Image': Image, 'Captions': Captions}
+--data_path = DATASET_PATH
+--bsize = BACTH_SIZE
+--num_workers = NUM_WORKERS
+--config = CONFIG_ADAPTERS.yaml(personalized_generation\examples\apdapter-T2I\configs\pl_train\coadapter-v1-train.yaml)
+--local_rank = GPU_ID
+--ckgt= CHECK_POINT(Stable diffusion)
+```
 
 # 💻 How to Test
 

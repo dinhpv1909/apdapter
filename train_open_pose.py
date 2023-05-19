@@ -67,6 +67,18 @@ def parsr_args():
         default=8,
     )
     parser.add_argument(
+        "--file_csv",
+        type=str,
+        default="",
+        help="load CSV file: {'ID': ID, 'Image': Image, 'Captions': Captions}"
+    )
+    parser.add_argument(
+        "--data_path",
+        type=str,
+        default="",
+        help="load path to data"
+    )
+    parser.add_argument(
         "--plms",
         action='store_true',
         help="use plms sampling",
@@ -174,7 +186,7 @@ def main():
     torch.cuda.set_device(opt.local_rank)
   
     # dataset
-    train_dataset = Open_Pose_Dataset('/kaggle/input/data-tiktok/anotation.csv')
+    train_dataset = Open_Pose_Dataset(opt.file_csv,opt.data_path)
     # train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset)
     train_dataloader = torch.utils.data.DataLoader(
         train_dataset,
@@ -201,8 +213,8 @@ def main():
     #     device_ids=[opt.local_rank],
     #     output_device=opt.local_rank)
 
-    model_ad = model_ad.to(device)
-    model = model.to(device)
+    # model_ad = model_ad.to(device)
+    # model = model.to(device)
     # optimizer
     params = list(model_ad.parameters())
     optimizer = torch.optim.AdamW(params, lr=0.00001)
@@ -241,6 +253,7 @@ def main():
     logger.info(f'Start training from epoch: {start_epoch}, iter: {current_iter}')
     for epoch in range(start_epoch, opt.epochs):
         # train_dataloader.sampler.set_epoch(epoch)
+        print(f"epoch: {epoch}")
         # train
         for _, data in enumerate(train_dataloader):
             current_iter += 1
