@@ -27,7 +27,7 @@ class Open_Pose_Dataset():
         if w % 8 != 0:
             w = w + (8- (w % 8))
         if h % 8 !=0:
-            h = h+ (8- (w % 8))
+            h = h+ (8- (h % 8))
             
         im = cv2.resize(im,(w,h), interpolation = cv2.INTER_AREA) 
         im = img2tensor(im, bgr2rgb=True, float32=True) / 255.
