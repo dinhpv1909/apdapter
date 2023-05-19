@@ -3,7 +3,7 @@ import cv2
 import os
 from basicsr.utils import img2tensor
 import pandas as pd
-import imutils
+
 
 class Open_Pose_Dataset():
     def __init__(self, file_csv, data_path):
