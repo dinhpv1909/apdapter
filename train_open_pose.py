@@ -256,7 +256,6 @@ def main():
         print(f"epoch: {epoch}")
         # train
         for _, data in enumerate(train_dataloader):
-            print(f"iter: {current_iter}")
             current_iter += 1
             with torch.no_grad():
                 c = model.get_learned_conditioning(data['sentence'])
