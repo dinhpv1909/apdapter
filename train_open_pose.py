@@ -217,7 +217,7 @@ def main():
     # model = model.to(device)
     # optimizer
     params = list(model_ad.parameters())
-    optimizer = torch.optim.AdamW(params, lr=0.00001)
+    optimizer = torch.optim.AdamW(params, lr=config["training"]["lr"])
 
     experiments_root = osp.join('experiments', opt.name)
 
@@ -274,7 +274,7 @@ def main():
 
             # save checkpoint
             rank, _ = get_dist_info()
-            if (rank == 0) and ((current_iter + 1) % 10000 == 0):
+            if (rank == 0) and ((current_iter + 1) % config["training"]["save_freq"] == 0):
                 save_filename = f'model_ad_{current_iter + 1}.pth'
                 save_path = os.path.join(experiments_root, 'models', save_filename)
                 save_dict = {}
