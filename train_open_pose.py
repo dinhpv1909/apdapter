@@ -202,7 +202,7 @@ def main():
     # open_pose encoder
     model_ad = Adapter(cin=3 * 64, channels=[320, 640, 1280, 1280][:4], nums_rb=2, ksize=1, sk=True, use_conv=False).to(
         device)
-
+    model_ad.load_state_dict(opt.ckpt_adapter)
     # to gpus
     # model_ad = torch.nn.parallel.DistributedDataParallel(
     #     model_ad,
