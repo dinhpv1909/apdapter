@@ -12,16 +12,26 @@ class Open_Pose_Dataset():
         self.files = []
         data = pd.read_csv(file_csv)
         for line in range(len(data)):
-            img_path = f'{data_path}/{data["ID"][line]}/{data["Image"][line]}'
-            open_pose_img_path = img_path
-            txt_path = img_path + '.txt'
+            img_path = f'{data_path}/{data["Image_path"][line]}'
+            open_pose_img_path = f'{data_path}/{data["Open_Pose_path"][line]}'
+            txt_path = f'{data_path}/{data["Caption_path"][line]}'
             self.files.append({'img_path': img_path, 'open_pose_img_path': open_pose_img_path, 'txt_path': txt_path})
 
     def __getitem__(self, idx):
         file = self.files[idx]
         h,w = 896,512
         
+<<<<<<< HEAD
         im = cv2.imread(f"{file['img_path']}")           
+=======
+        h = 512
+        w = 512
+        
+        if w % 8 != 0:
+            w = w + (8- (w % 8))
+        if h % 8 !=0:
+            h = h+ (8- (h % 8))
+>>>>>>> bd62d1b6327c2322e95cc223242b665106b9a79b
             
         im = cv2.resize(im,(w,h), interpolation = cv2.INTER_AREA) # 3:4 config to dataset tik tok
         im = img2tensor(im, bgr2rgb=True, float32=True) / 255.
