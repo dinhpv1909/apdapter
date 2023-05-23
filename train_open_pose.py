@@ -79,6 +79,12 @@ def parsr_args():
         help="load path to data"
     )
     parser.add_argument(
+        "--result_path",
+        type=str,
+        default="",
+        help="load path to data"
+    )
+    parser.add_argument(
         "--plms",
         action='store_true',
         help="use plms sampling",
@@ -90,6 +96,12 @@ def parsr_args():
     )
     parser.add_argument(
         "--ckpt",
+        type=str,
+        default="models/sd-v1-4.ckpt",
+        help="path to checkpoint of model",
+    )
+    parser.add_argument(
+        "--ckpt_adapter",
         type=str,
         default="models/sd-v1-4.ckpt",
         help="path to checkpoint of model",
@@ -202,7 +214,7 @@ def main():
     # open_pose encoder
     model_ad = Adapter(cin=3 * 64, channels=[320, 640, 1280, 1280][:4], nums_rb=2, ksize=1, sk=True, use_conv=False).to(
         device)
-
+    model_ad.load_state_dict(opt.ckpt_adapter)
     # to gpus
     # model_ad = torch.nn.parallel.DistributedDataParallel(
     #     model_ad,
@@ -217,9 +229,9 @@ def main():
     # model = model.to(device)
     # optimizer
     params = list(model_ad.parameters())
-    optimizer = torch.optim.AdamW(params, lr=0.00001)
+    optimizer = torch.optim.AdamW(params, lr=config["training"]["lr"])
 
-    experiments_root = osp.join('experiments', opt.name)
+    experiments_root = osp.join(opt.result_path,'experiments', opt.name)
 
     # resume state
     resume_state = load_resume_state(opt)
@@ -274,7 +286,7 @@ def main():
 
             # save checkpoint
             rank, _ = get_dist_info()
-            if (rank == 0) and ((current_iter + 1) % 10000 == 0):
+            if (rank == 0) and ((current_iter + 1) % config["training"]["save_freq"] == 0):
                 save_filename = f'model_ad_{current_iter + 1}.pth'
                 save_path = os.path.join(experiments_root, 'models', save_filename)
                 save_dict = {}
