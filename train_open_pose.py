@@ -95,6 +95,12 @@ def parsr_args():
         help="path to checkpoint of model",
     )
     parser.add_argument(
+        "--ckpt_adapter",
+        type=str,
+        default="models/t2iadapter_openpose_sd14v1.pth",
+        help="path to checkpoint of model",
+    )
+    parser.add_argument(
         "--config",
         type=str,
         default="configs/stable-diffusion/sd-v1-train.yaml",
