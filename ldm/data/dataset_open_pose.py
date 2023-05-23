@@ -24,7 +24,7 @@ class Open_Pose_Dataset():
         h = im.shape[0]
         w = im.shape[1]
         
-        h = 896
+        h = 512
         w = 512
         
         if w % 8 != 0:
