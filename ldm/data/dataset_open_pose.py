@@ -12,9 +12,9 @@ class Open_Pose_Dataset():
         self.files = []
         data = pd.read_csv(file_csv)
         for line in range(len(data)):
-            img_path = f'{data_path}/{data["ID"][line]}/{data["Image"][line]}'
-            open_pose_img_path = img_path
-            txt_path = img_path + '.txt'
+            img_path = f'{data_path}/{data["Image_path"][line]}'
+            open_pose_img_path = f'{data_path}/{data["Open_Pose_path"][line]}'
+            txt_path = f'{data_path}/{data["Caption_path"][line]}'
             self.files.append({'img_path': img_path, 'open_pose_img_path': open_pose_img_path, 'txt_path': txt_path})
 
     def __getitem__(self, idx):
