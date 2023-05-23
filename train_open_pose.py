@@ -11,7 +11,7 @@ from ldm.data.dataset_open_pose import Open_Pose_Dataset
 from basicsr.utils.dist_util import get_dist_info, init_dist, master_only
 from ldm.modules.encoders.adapter import Adapter
 from ldm.util import load_model_from_config
-
+from ldm.util import fix_cond_shapes, load_model_from_config, read_state_dict
 
 @master_only
 def mkdir_and_rename(path):
@@ -180,7 +180,6 @@ def parsr_args():
     opt = parser.parse_args()
     return opt
 
-
 def main():
     opt = parsr_args()
     config = OmegaConf.load(f"{opt.config}")
@@ -208,20 +207,18 @@ def main():
     # open_pose encoder
     model_ad = Adapter(cin=3 * 64, channels=[320, 640, 1280, 1280][:4], nums_rb=2, ksize=1, sk=True, use_conv=False).to(
         device)
-    model_ad.load_state_dict(opt.ckpt_adapter)
-    # to gpus
-    # model_ad = torch.nn.parallel.DistributedDataParallel(
-    #     model_ad,
-    #     device_ids=[opt.local_rank],
-    #     output_device=opt.local_rank)
-    # model = torch.nn.parallel.DistributedDataParallel(
-    #     model,
-    #     device_ids=[opt.local_rank],
-    #     output_device=opt.local_rank)
+    state_dict = read_state_dict(opt.ckpt_adapter)
+    new_state_dict = {}
+    for k, v in state_dict.items():
+        if k.startswith('adapter.'):
+            new_state_dict[k[len('adapter.'):]] = v
+        else:
+            new_state_dict[k] = v
 
-    # model_ad = model_ad.to(device)
-    # model = model.to(device)
-    # optimizer
+    model_ad.load_state_dict(new_state_dict)
+
+
+
     params = list(model_ad.parameters())
     optimizer = torch.optim.AdamW(params, lr=config["training"]["lr"])
 
