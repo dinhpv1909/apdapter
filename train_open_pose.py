@@ -11,7 +11,7 @@ from ldm.data.dataset_open_pose import Open_Pose_Dataset
 from basicsr.utils.dist_util import get_dist_info, init_dist, master_only
 from ldm.modules.encoders.adapter import Adapter
 from ldm.util import load_model_from_config
-
+import wandb
 
 @master_only
 def mkdir_and_rename(path):
@@ -178,7 +178,7 @@ def parsr_args():
 def main():
     opt = parsr_args()
     config = OmegaConf.load(f"{opt.config}")
-
+    wandb.init(config= config, project ="Adapter_open_pose")
     # distributed setting
     # init_dist(opt.launcher)
     torch.backends.cudnn.benchmark = True
@@ -271,7 +271,7 @@ def main():
 
             if (current_iter + 1) % opt.print_fq == 0:
                 logger.info(loss_dict)
-
+                wandb.log({"loss" :loss_dict})
             # save checkpoint
             rank, _ = get_dist_info()
             if (rank == 0) and ((current_iter + 1) % config["training"]["save_freq"] == 0):
