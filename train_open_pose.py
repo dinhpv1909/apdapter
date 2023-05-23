@@ -10,7 +10,7 @@ from omegaconf import OmegaConf
 from ldm.data.dataset_open_pose import Open_Pose_Dataset
 from basicsr.utils.dist_util import get_dist_info, init_dist, master_only
 from ldm.modules.encoders.adapter import Adapter
-from ldm.util import load_model_from_config
+from ldm.util import load_model_from_config, read_state_dict
 import wandb
 @master_only
 def mkdir_and_rename(path):
