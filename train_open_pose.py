@@ -11,12 +11,7 @@ from ldm.data.dataset_open_pose import Open_Pose_Dataset
 from basicsr.utils.dist_util import get_dist_info, init_dist, master_only
 from ldm.modules.encoders.adapter import Adapter
 from ldm.util import load_model_from_config
-<<<<<<< HEAD
 import wandb
-=======
-from ldm.util import fix_cond_shapes, load_model_from_config, read_state_dict
->>>>>>> bd62d1b6327c2322e95cc223242b665106b9a79b
-
 @master_only
 def mkdir_and_rename(path):
     """mkdirs. If path exists, rename it with timestamp and create a new one.
