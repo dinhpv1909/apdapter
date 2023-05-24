@@ -292,7 +292,7 @@ def main():
                 save_path = os.path.join(experiments_root, 'training_states', save_filename)
                 torch.save(state, save_path)
                 wandb.log({"loss_weights" :loss_dict})
-            wandb.log({"loss_epoch" :loss_dict})
+        wandb.log({"loss_epoch" :loss_dict})
     wandb.finish()
 
 if __name__ == '__main__':
