@@ -23,8 +23,6 @@ class Open_Pose_Dataset():
         
 
         im = cv2.imread(f"{file['img_path']}")           
-        h = 512
-        w = 512
             
         im = cv2.resize(im,(w,h), interpolation = cv2.INTER_AREA) # 3:4 config to dataset tik tok
         im = img2tensor(im, bgr2rgb=True, float32=True) / 255.
