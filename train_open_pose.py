@@ -12,6 +12,7 @@ from basicsr.utils.dist_util import get_dist_info, init_dist, master_only
 from ldm.modules.encoders.adapter import Adapter
 from ldm.util import load_model_from_config, read_state_dict
 import wandb
+import numpy as np
 @master_only
 def mkdir_and_rename(path):
     """mkdirs. If path exists, rename it with timestamp and create a new one.
@@ -257,6 +258,7 @@ def main():
         # train_dataloader.sampler.set_epoch(epoch)
         print(f"epoch: {epoch}")
         # train
+        loss_dict_e ={"val/loss":[],"val/loss_simple":[],"val/loss_vlb":[]}
         for _, data in enumerate(train_dataloader):
             current_iter += 1
             with torch.no_grad():
@@ -268,12 +270,15 @@ def main():
             model.zero_grad()
             features_adapter = model_ad(data['open_pose'].to(device))
             l_pixel, loss_dict = model(z, c=c, features_adapter=features_adapter)
+            loss_dict_e["val/loss"].append(loss_dict["val/loss"])
+            loss_dict_e["val/loss_simple"].append(loss_dict["val/loss_simple"])
+            loss_dict_e["val/loss_vlb"].append(loss_dict["val/loss_vlb"])
             l_pixel.backward()
             optimizer.step()
 
             if (current_iter + 1) % opt.print_fq == 0:
                 logger.info(loss_dict)
-                wandb.log({"loss" :loss_dict})
+                wandb.log({"loss 100 iters" :loss_dict})
             # save checkpoint
             rank, _ = get_dist_info()
             if (rank == 0) and ((current_iter + 1) % config["training"]["save_freq"] == 0):
@@ -292,7 +297,8 @@ def main():
                 save_path = os.path.join(experiments_root, 'training_states', save_filename)
                 torch.save(state, save_path)
                 wandb.log({"loss_weights" :loss_dict})
-        wandb.log({"loss_epoch" :loss_dict})
+        loss_dict_e.update({"val/loss":np.mean(loss_dict_e["val/loss"]),"val/loss_simple":loss_dict_e["val/loss_simple"],"val/loss_vlb":loss_dict_e["val/loss_vlb"]})
+        wandb.log({"loss_epoch" :loss_dict_e})
     wandb.finish()
 
 if __name__ == '__main__':

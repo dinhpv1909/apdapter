@@ -73,7 +73,7 @@ model:
 
 logger:
   print_freq: 100
-  save_checkpoint_freq: 10000
+  save_checkpoint_freq: 8832
   use_tb_logger: true
   wandb:
     project: ~

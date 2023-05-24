@@ -885,8 +885,7 @@ class LatentDiffusion(DDPM):
         loss_dict.update({f'{prefix}/loss_simple': loss_simple.mean()})
         self.logvar = self.logvar.to(self.device)
         logvar_t = self.logvar[t].to(self.device)
-        # logvar_t = self.logvar[t].to("cuda:0")
-        # logvar_t = self.logvar[t].to("cpu")
+     
         loss = loss_simple / torch.exp(logvar_t) + logvar_t
         # loss = loss_simple / torch.exp(self.logvar) + self.logvar
         if self.learn_logvar:
