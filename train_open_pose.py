@@ -291,6 +291,7 @@ def main():
                 save_filename = f'{current_iter + 1}.state'
                 save_path = os.path.join(experiments_root, 'training_states', save_filename)
                 torch.save(state, save_path)
+            wandb.log({"loss_epoch" :loss_dict})
     wandb.finish()
 
 if __name__ == '__main__':
